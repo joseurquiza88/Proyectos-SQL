@@ -1,8 +1,5 @@
 
--- =========================================================================
 --                            LIMPIEZA DE DATOS SQL
--- =========================================================================
-
 -- Creacion de la base de datos para trabajar
  CREATE DATABASE IF NOT EXISTS clean;
  use clean;

@@ -1,5 +1,8 @@
  -- Se crea el esquema
 CREATE DATABASE test; 
+
+
+
 -- Eliminar base de datos
 DROP DATABASE test; 
 -- Usar la base de datos

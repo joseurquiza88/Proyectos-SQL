@@ -107,3 +107,14 @@ INSERT INTO inscripciones (fecha_inscripicion, abono_insc, id_alumno, id_curso) 
 ('2025-03-23', TRUE, 19, 10),
 ('2025-03-24', FALSE, 20, 5),
 ('2025-03-25', TRUE, 20, 9);
+
+INSERT INTO inscripciones (fecha_inscripicion, abono_insc, id_alumno, id_curso) VALUES
+('2025-04-01', TRUE, 1, 6),
+('2025-02-02', TRUE, 2, 7),
+('2025-02-02', TRUE, 20, 2);
+
+INSERT INTO inscripciones (fecha_inscripicion, abono_insc, id_alumno, id_curso) VALUES
+('2025-03-12', FALSE, 14, 2);
+
+
+DELETE FROM inscripciones WHERE id_alumno = 14 and id_curso = 7;
