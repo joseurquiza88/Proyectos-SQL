@@ -1,5 +1,5 @@
 CREATE DATABASE olist;
-
+-- drop table prueba;
 CREATE TABLE customers (
     customer_id VARCHAR(50) PRIMARY KEY,
     customer_unique_id VARCHAR(50),
@@ -7,13 +7,147 @@ CREATE TABLE customers (
     customer_city VARCHAR(100),
     customer_state VARCHAR(10)
 );
-drop table prueba;
+
 
 COPY customers
 FROM 'D:/Josefina/Proyectos/Datascience/SQL/olist/data/olist_customers_dataset.csv'
 DELIMITER ','
 CSV HEADER;
 
-SELECT *
-FROM customers
-LIMIT 10;
+
+-- Table sellets
+CREATE TABLE sellers (
+    seller_id VARCHAR(50) PRIMARY KEY,
+    seller_zip_code_prefix INT,
+    seller_city VARCHAR(100),
+    seller_state VARCHAR(10)
+);
+
+
+COPY sellers
+FROM 'D:/Josefina/Proyectos/Datascience/SQL/olist/data/olist_sellers_dataset.csv'
+DELIMITER ','
+CSV HEADER;
+
+
+
+-- ------------------------------------
+CREATE TABLE products (
+    product_id VARCHAR(50) PRIMARY KEY,
+    product_category_name VARCHAR(100),
+    product_name_length INT,
+    product_description_length INT,
+    product_photos_qty INT,
+    product_weight_g INT,
+    product_length_cm INT,
+    product_height_cm INT,
+    product_width_cm INT
+);
+
+
+COPY products
+FROM 'D:/Josefina/Proyectos/Datascience/SQL/olist/data/olist_products_dataset.csv'
+DELIMITER ','
+CSV HEADER;
+
+-- ------------------------------------
+CREATE TABLE orders (
+    order_id VARCHAR(50) PRIMARY KEY,
+    customer_id VARCHAR(50),
+    order_status VARCHAR(50),
+    order_purchase_timestamp TIMESTAMP,
+    order_approved_at TIMESTAMP,
+    order_delivered_carrier_date TIMESTAMP,
+    order_delivered_customer_date TIMESTAMP,
+    order_estimated_delivery_date TIMESTAMP
+);
+
+
+COPY orders
+FROM 'D:/Josefina/Proyectos/Datascience/SQL/olist/data/olist_orders_dataset.csv'
+DELIMITER ','
+CSV HEADER;
+
+
+-- ------------------------------------
+
+CREATE TABLE order_items (
+    order_id VARCHAR(50),
+    order_item_id INT,
+    product_id VARCHAR(50),
+    seller_id VARCHAR(50),
+    shipping_limit_date TIMESTAMP,
+    price NUMERIC(10,2),
+    freight_value NUMERIC(10,2)
+);
+
+
+COPY order_items
+FROM 'D:/Josefina/Proyectos/Datascience/SQL/olist/data/olist_order_items_dataset.csv'
+DELIMITER ','
+CSV HEADER;
+
+
+-- ------------------------------------
+
+CREATE TABLE order_payments (
+    order_id VARCHAR(50),
+    payment_sequential INT,
+    payment_type VARCHAR(50),
+    payment_installments INT,
+    payment_value NUMERIC(10,2)
+);
+
+
+COPY order_payments
+FROM 'D:/Josefina/Proyectos/Datascience/SQL/olist/data/olist_order_payments_dataset.csv'
+DELIMITER ','
+CSV HEADER;
+
+-- ------------------------------------
+
+CREATE TABLE order_reviews (
+    review_id VARCHAR(50),
+    order_id VARCHAR(50),
+    review_score INT,
+    review_comment_title TEXT,
+    review_comment_message TEXT,
+    review_creation_date TIMESTAMP,
+    review_answer_timestamp TIMESTAMP
+);
+
+
+COPY order_reviews
+FROM 'D:/Josefina/Proyectos/Datascience/SQL/olist/data/olist_order_reviews_dataset.csv'
+DELIMITER ','
+CSV HEADER;
+
+
+-- ------------------------------------
+CREATE TABLE geolocation (
+    geolocation_zip_code_prefix INT,
+    geolocation_lat NUMERIC(10,7),
+    geolocation_lng NUMERIC(10,7),
+    geolocation_city VARCHAR(100),
+    geolocation_state VARCHAR(10)
+);
+
+
+COPY geolocation
+FROM 'D:/Josefina/Proyectos/Datascience/SQL/olist/data/olist_geolocation_dataset.csv'
+DELIMITER ','
+CSV HEADER;
+
+
+
+-- ------------------------------------
+-- Probamos que funcionen
+SELECT table_name
+FROM information_schema.tables
+WHERE table_schema='public';
+
+SELECT COUNT(*) FROM customers;
+
+SELECT COUNT(*) FROM orders;
+
+SELECT COUNT(*) FROM order_items;
