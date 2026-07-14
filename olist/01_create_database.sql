@@ -1,5 +1,7 @@
 CREATE DATABASE olist;
--- drop table prueba;
+
+-- Tabla customers 
+-- Esta relacionada con los clientes
 CREATE TABLE customers (
     customer_id VARCHAR(50) PRIMARY KEY,
     customer_unique_id VARCHAR(50),
@@ -8,14 +10,15 @@ CREATE TABLE customers (
     customer_state VARCHAR(10)
 );
 
-
+-- Se suben los registros desde los csv que estan en el path local
 COPY customers
-FROM 'D:/Josefina/Proyectos/Datascience/SQL/olist/data/olist_customers_dataset.csv'
+FROM '../data/olist_customers_dataset.csv'
 DELIMITER ','
 CSV HEADER;
 
-
--- Table sellets
+-- ---------------------------------------------------
+-- Tabla sellers
+-- Esta relacionada con los vendedores
 CREATE TABLE sellers (
     seller_id VARCHAR(50) PRIMARY KEY,
     seller_zip_code_prefix INT,
@@ -23,15 +26,16 @@ CREATE TABLE sellers (
     seller_state VARCHAR(10)
 );
 
-
+-- Se suben los registros desde los csv que estan en el path local
 COPY sellers
-FROM 'D:/Josefina/Proyectos/Datascience/SQL/olist/data/olist_sellers_dataset.csv'
+FROM '../data/olist_sellers_dataset.csv'
 DELIMITER ','
 CSV HEADER;
 
 
 
--- ------------------------------------
+-- ---------------------------------------------------
+-- Tabla productos
 CREATE TABLE products (
     product_id VARCHAR(50) PRIMARY KEY,
     product_category_name VARCHAR(100),
@@ -44,13 +48,14 @@ CREATE TABLE products (
     product_width_cm INT
 );
 
-
+-- Se suben los registros desde los csv que estan en el path local
 COPY products
-FROM 'D:/Josefina/Proyectos/Datascience/SQL/olist/data/olist_products_dataset.csv'
+FROM '../data/olist_products_dataset.csv'
 DELIMITER ','
 CSV HEADER;
 
--- ------------------------------------
+-- ---------------------------------------------------
+-- Tabla ordenes
 CREATE TABLE orders (
     order_id VARCHAR(50) PRIMARY KEY,
     customer_id VARCHAR(50),
@@ -62,15 +67,15 @@ CREATE TABLE orders (
     order_estimated_delivery_date TIMESTAMP
 );
 
-
+-- Se suben los registros desde los csv que estan en el path local
 COPY orders
-FROM 'D:/Josefina/Proyectos/Datascience/SQL/olist/data/olist_orders_dataset.csv'
+FROM '../data/olist_orders_dataset.csv'
 DELIMITER ','
 CSV HEADER;
 
 
--- ------------------------------------
-
+-- ---------------------------------------------------
+-- Tabla de los items de cada orden
 CREATE TABLE order_items (
     order_id VARCHAR(50),
     order_item_id INT,
@@ -81,15 +86,16 @@ CREATE TABLE order_items (
     freight_value NUMERIC(10,2)
 );
 
-
+-- Se suben los registros desde los csv que estan en el path local
 COPY order_items
-FROM 'D:/Josefina/Proyectos/Datascience/SQL/olist/data/olist_order_items_dataset.csv'
+FROM '..data/olist_order_items_dataset.csv'
 DELIMITER ','
 CSV HEADER;
 
 
--- ------------------------------------
 
+-- ---------------------------------------------------
+-- Tabla con las caracteristicas de pago de cada orden
 CREATE TABLE order_payments (
     order_id VARCHAR(50),
     payment_sequential INT,
@@ -98,14 +104,14 @@ CREATE TABLE order_payments (
     payment_value NUMERIC(10,2)
 );
 
-
+-- Se suben los registros desde los csv que estan en el path local
 COPY order_payments
-FROM 'D:/Josefina/Proyectos/Datascience/SQL/olist/data/olist_order_payments_dataset.csv'
+FROM '../data/olist_order_payments_dataset.csv'
 DELIMITER ','
 CSV HEADER;
 
--- ------------------------------------
-
+-- ---------------------------------------------------
+-- Tabla con las caracteristicas de las ordenes
 CREATE TABLE order_reviews (
     review_id VARCHAR(50),
     order_id VARCHAR(50),
@@ -116,14 +122,15 @@ CREATE TABLE order_reviews (
     review_answer_timestamp TIMESTAMP
 );
 
-
+-- Se suben los registros desde los csv que estan en el path local
 COPY order_reviews
-FROM 'D:/Josefina/Proyectos/Datascience/SQL/olist/data/olist_order_reviews_dataset.csv'
+FROM '../data/olist_order_reviews_dataset.csv'
 DELIMITER ','
 CSV HEADER;
 
 
--- ------------------------------------
+-- ---------------------------------------------------
+-- Tabla con la geolocalizacion de las ordenes
 CREATE TABLE geolocation (
     geolocation_zip_code_prefix INT,
     geolocation_lat NUMERIC(10,7),
@@ -132,9 +139,9 @@ CREATE TABLE geolocation (
     geolocation_state VARCHAR(10)
 );
 
-
+-- Se suben los registros desde los csv que estan en el path local
 COPY geolocation
-FROM 'D:/Josefina/Proyectos/Datascience/SQL/olist/data/olist_geolocation_dataset.csv'
+FROM '../data/olist_geolocation_dataset.csv'
 DELIMITER ','
 CSV HEADER;
 
@@ -142,6 +149,7 @@ CSV HEADER;
 
 -- ------------------------------------
 -- Probamos que funcionen
+-- Se hacen algunas queries simples
 SELECT table_name
 FROM information_schema.tables
 WHERE table_schema='public';
