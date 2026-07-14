@@ -2,7 +2,7 @@
 
 -- Consultas de SQL nivel básico
 
--- Pregunta 01 Cuántos pedidos hay en total en la tabla de pedidos?
+-- 01 Cuántos pedidos hay en total en la tabla de pedidos?
 SELECT  COUNT (*) FROM orders;
 
 -- Comentario: creo que hay pedidos que no son validos, lo revisamos
@@ -19,7 +19,7 @@ GROUP BY order_status
 ORDER BY cantidad DESC;
 
 -- ###################################################################
--- Pregunta 2. Listar los primeros 10 pedidos con su estado y fecha de compra, ordenados por fecha de compra de forma descendente.
+-- 2. Listar los primeros 10 pedidos con su estado y fecha de compra, ordenados por fecha de compra de forma descendente.
 SELECT order_status AS estado,
  order_purchase_timestamp AS fecha_compra
  from orders
@@ -44,9 +44,47 @@ SELECT COUNT(*) FROM orders WHERE order_status = 'canceled';
  SELECT  COUNT(DISTINCT customer_unique_id) FROM customers;
 
 -- ###################################################################
- -- Pregunta 6. Listar las combinaciones distintas de ciudad y estado donde hay vendedores registrados, ordenadas alfabéticamente.
+ -- 6. Listar las combinaciones distintas de ciudad y estado donde hay vendedores registrados, ordenadas alfabéticamente.
  SELECT * FROM sellers;
  SELECT DISTINCT seller_city, seller_state FROM sellers ORDER BY seller_city, seller_state;
 
- -- ###################################################################
- --
+-- ###################################################################
+-- 7. Cuántos pedidos fueron entregados?.
+
+
+-- ###################################################################
+-- 8.	Cuántos tipos distintos de pago existen?
+
+
+
+-- ###################################################################
+-- 9.	Listar 20 productos con mayor precio
+
+-- ###################################################################
+-- 10.	Listar 20 productos con mayor precio
+
+-- ###################################################################
+-- 11.	Listar los vendedores por estado
+
+
+-- ###################################################################
+-- 12.	Listar las categorías en inglés
+
+
+-- ###################################################################
+-- 13.	Listar las categorías en inglés
+
+-- ###################################################################
+-- 14.	Pedidos con entrega estimada antes del 2018-01-01
+
+-- ###################################################################
+-- 15.	Precio mínimo y máximo
+
+
+-- ###################################################################
+-- 16.	Pedidos con review 5
+
+
+-- ###################################################################
+-- 17.	Precio promedio por vendedor
+

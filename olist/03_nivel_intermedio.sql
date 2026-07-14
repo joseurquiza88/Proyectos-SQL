@@ -2,7 +2,7 @@
 
 
 -- ###################################################################
--- Pregunta 7. ¿Cuál es el precio promedio de los productos vendidos, 
+-- 01. ¿Cuál es el precio promedio de los productos vendidos, 
 -- por categoría (en inglés)? Ordenar de mayor a menor.
 
 SELECT * FROM order_payments;
@@ -34,7 +34,7 @@ ROUND(AVG(op.payment_value),2) AS promedio
  ;
 
 -- ###################################################################
--- Pregunta 8. ¿Cuántos pedidos hizo cada cliente? 
+-- 2. ¿Cuántos pedidos hizo cada cliente? 
 -- Mostrar solo los clientes que hicieron más de un pedido.
 
 SELECT * FROM customers;
@@ -49,13 +49,13 @@ HAVING COUNT(DISTINCT ord.order_id) > 1
 ORDER BY cantidad_pedidos DESC;
 
 -- ###################################################################
--- Pregunta 9. ¿Cuál es el estado (customer_state) con más clientes únicos?
+-- 3. ¿Cuál es el estado (customer_state) con más clientes únicos?
 SELECT customer_state,COUNT(customer_unique_id) AS cantidad_clientes FROM customers
 GROUP BY customer_state
 ORDER BY cantidad_clientes DESC LIMIT 1;
 
 -- ###################################################################
--- Pregunta 10. ¿Cuál es el monto total pagado por tipo de método de pago?
+-- 4. ¿Cuál es el monto total pagado por tipo de método de pago?
 
 SELECT payment_type AS tipo, sum(payment_value) AS total
 FROM order_payments
