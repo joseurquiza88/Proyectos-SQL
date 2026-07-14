@@ -1,5 +1,7 @@
 
 
+-- Consultas de SQL nivel básico
+
 -- Pregunta 01 Cuántos pedidos hay en total en la tabla de pedidos?
 SELECT  COUNT (*) FROM orders;
 
@@ -44,5 +46,7 @@ SELECT COUNT(*) FROM orders WHERE order_status = 'canceled';
 -- ###################################################################
  -- Pregunta 6. Listar las combinaciones distintas de ciudad y estado donde hay vendedores registrados, ordenadas alfabéticamente.
  SELECT * FROM sellers;
-
  SELECT DISTINCT seller_city, seller_state FROM sellers ORDER BY seller_city, seller_state;
+
+ -- ###################################################################
+ --
