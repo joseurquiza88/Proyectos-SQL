@@ -146,7 +146,20 @@ DELIMITER ','
 CSV HEADER;
 
 
+-- ---------------------------------------------------
+-- Tabla de traducción de categorías de producto
+CREATE TABLE product_category_name_translation (
 
+    product_category_name VARCHAR(100),
+    product_category_name_english VARCHAR(100)
+);
+
+-- Se suben los registros desde los csv que estan en el path local
+COPY product_category_name_translation
+FROM 'D:/Josefina/Proyectos/Datascience/SQL/olist/data/product_category_name_translation.csv'
+DELIMITER ','
+CSV HEADER;
+D:\Josefina\Proyectos\Datascience\SQL\olist\data
 -- ------------------------------------
 -- Probamos que funcionen
 -- Se hacen algunas queries simples
@@ -159,3 +172,5 @@ SELECT COUNT(*) FROM customers;
 SELECT COUNT(*) FROM orders;
 
 SELECT COUNT(*) FROM order_items;
+
+SELECT * FROM product_category_name_translation;
