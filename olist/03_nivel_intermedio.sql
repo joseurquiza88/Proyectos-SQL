@@ -205,4 +205,4 @@ customer_unique_id, cantidad de pedidos, dinero gastado Ordenar de mayor a menor
 
 
 -- ###################################################################
--- 25.	Por año, ¿cuál es el porcentaje de pagos hechos con 'boleto' vs 'credit_card'?
+-- 25.	Por año, ¿cuál es el porcentaje de pagos hechos con 'boleto' vs 'credit_card'
