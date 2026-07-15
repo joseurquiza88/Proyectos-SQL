@@ -63,7 +63,7 @@ GROUP BY tipo
 ORDER BY total DESC;
 
 -- ###################################################################
--- Pregunta 11. ¿Cuál es la calificación promedio (review_score) por categoría 
+-- 5 ¿Cuál es la calificación promedio (review_score) por categoría 
 -- de producto? Ordenar de la peor calificada a la mejor.
 SELECT  o.order_id, o.review_score, oi.order_item_id, oi.product_id, p.product_category_name
 FROM order_reviews o
@@ -89,7 +89,7 @@ SELECT * FROM products;
 
 
 -- ###################################################################
--- Pregunta 12. ¿Cuántos pedidos entregados hubo por mes y año?
+-- 6. ¿Cuántos pedidos entregados hubo por mes y año?
 -- REVISAR/RETOMAR TEMA!!
 SELECT DATE_TRUNC('month', order_purchase_timestamp) AS mes, COUNT(*) AS pedidos
 FROM orders
@@ -99,8 +99,7 @@ ORDER BY mes;
 
 
 -- ###################################################################
--- Pregunta 13. ¿Cuáles son los 10 vendedores 
--- con mayor facturación total (suma de price)?
+-- 7. ¿Cuáles son los 10 vendedores con mayor facturación total (suma de price)?
 SELECT * FROM sellers;
 SELECT * FROM order_items;
 SELECT * FROM orders;
@@ -109,7 +108,6 @@ SELECT s.seller_id as vendedores, sum(op.payment_value) as facturacion
 FROM sellers s
 JOIN order_items oi
 ON s.seller_id = oi.seller_id
-
 JOIN order_payments op
 ON oi.order_id = op.order_id
 GROUP BY vendedores
@@ -120,9 +118,9 @@ LIMIT 10
 
 
 -- ###################################################################
---  Pregunta 14. ¿Cuál es el costo de envío (freight_value) promedio, 
--- agrupado por estado del cliente?
+--  8. ¿Cuál es el costo de envío (freight_value) promedio, agrupado por estado del cliente?
 
+-- Prueba
 SELECT customer_id FROM customers;
 SELECT order_id customer_id FROM orders;
 SELECT order_id, AVG(freight_value) FROM orders_items;
@@ -140,11 +138,71 @@ ORDER BY costo_envio DESC
 ;
 
 
+-- ###################################################################
+--  9.	 ¿Cuál es el costo de envío (freight_value) promedio, agrupado por estado del cliente?
+
+
+-- ###################################################################
+-- 10.	Listar los pedidos del año 2017
 
 
 
+-- ###################################################################
+-- 11.	Mostrar los 10 clientes (customer_unique_id) que más dinero gastaron en total. Mostrar:
+customer_unique_id, cantidad de pedidos, dinero gastado Ordenar de mayor a menor.
 
 
 
+-- ###################################################################
+-- 12.	¿Cuál fue el ticket promedio (payment_value) por estado del cliente? 
+-- Mostrar: Estado, Cantidad de pedidos, Ticket promedio Ordenar por ticket promedio descendente.
+
+-- ###################################################################
+-- 13.	Calcular cuánto tardó cada pedido en entregarse. Mostrar únicamente aquellos pedidos cuya entrega demoró más de 30 días.
 
 
+-- ###################################################################
+-- 14.	¿Cuáles son las 5 categorías de productos más vendidas (en cantidad de items)?
+
+
+-- ###################################################################
+-- 15.	¿Cuántos vendedores distintos vendieron cada categoría de producto? Ordenar de mayor a menor.
+
+
+-- ###################################################################
+-- 16.	¿ Cuál es la cantidad de pedidos y el porcentaje de pedidos cancelados sobre el total, por año?
+
+
+-- ###################################################################
+-- 17.	Mostrar los vendedores que tuvieron una calificación promedio menor a 3 (considerando las reviews de los pedidos en los que participaron), junto con la cantidad de reviews que tienen.
+
+-- ###################################################################
+-- 18.	¿Cuál es la cantidad de pedidos por método de pago y el promedio de cuotas (payment_installments) usado en cada uno?.
+
+
+-- ###################################################################
+-- 19.	Listar las 10 ciudades de clientes con mayor gasto total, mostrando también la cantidad de clientes únicos de esa ciudad.
+
+-- ###################################################################
+-- 20.	¿Cuál es el peso promedio (product_weight_g) de los productos por categoría, solo para categorías con más de 100 productos vendidos?.
+
+
+-- ###################################################################
+-- 21.	¿Cuántos pedidos tuvieron más de un método de pago asociado (pagos combinados)?
+
+
+
+-- ###################################################################
+-- 22.	¿Cuál es la diferencia promedio (en días) entre la fecha estimada de entrega y la fecha real de entrega, por estado del cliente? Ordenar mostrando primero los estados donde más se atrasan las entregas.
+
+
+-- ###################################################################
+-- 23.	¿Cuál es el vendedor con mayor cantidad de pedidos distintos entregados?
+
+
+-- ###################################################################
+-- 24.	¿Cuántas categorías de producto tienen un precio promedio mayor a 200?
+
+
+-- ###################################################################
+-- 25.	Por año, ¿cuál es el porcentaje de pagos hechos con 'boleto' vs 'credit_card'?
