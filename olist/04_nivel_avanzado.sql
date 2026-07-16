@@ -3,10 +3,32 @@
 
 -- ###################################################################
 -- 1 Calcular el tiempo promedio (en días) entre la fecha de compra y la fecha de entrega real, solo para pedidos entregados.
+SELECT * FROM orders; -- order_purchase_timestamp, order_delivered_customer_date, order_status = 'delivered'
 
+SELECT ROUND(AVG(order_delivered_customer_date::date - order_purchase_timestamp::date),2) AS tiempo_promedio_entrega_dias
+ FROM orders
+ WHERE order_status = 'delivered'
+ ;
 
 -- ###################################################################
 -- 2. ¿Qué porcentaje de los pedidos entregados llegó después de la fecha estimada de entrega?
+SELECT * FROM orders;
+-- 100*((SUM(CASE WHEN ... THEN 1 ELSE 0 END)
+SELECT 
+    ROUND(
+        100.0 * SUM(
+            CASE 
+                WHEN (order_delivered_customer_date::date - order_estimated_delivery_date::date) > 0 
+                THEN 1 
+                ELSE 0 
+            END
+        ) / COUNT(*),
+        2
+    ) AS porcentaje
+FROM orders
+WHERE order_status = 'delivered'
+;
+
 
 
 -- ###################################################################
