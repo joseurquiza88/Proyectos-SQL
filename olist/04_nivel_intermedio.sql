@@ -1,0 +1,2 @@
+-- Consultas de SQL nivel intermedio 
+-- Practicas de subconsultas
