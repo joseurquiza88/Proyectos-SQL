@@ -3,10 +3,26 @@
 -- ---------------------------------------------------------------------------------------
 -- Subconsultas (8 ejercicios)
 
-
-
 -- ###################################################################
 -- 1. Mostrar los pedidos cuyo monto total sea mayor que el promedio de todos los pedidos.
+SELECT * FROM order_items;
+
+SELECT order_id, SUM(price) AS total_pedido
+FROM order_items
+GROUP BY order_id
+-- Agrupo la suma total y lo compraro (mayor) que el promedio de todos los pedidos
+HAVING SUM(price) > (
+  SELECT AVG(total_pedido)
+  FROM ( -- de donde?
+    SELECT order_id, SUM(price) AS total_pedido
+    FROM order_items
+    GROUP BY order_id
+  ) t
+);
+
+
+
+;
 
 -- ###################################################################
 -- 2. Mostrar los clientes que realizaron más pedidos que el promedio de pedidos por cliente.
