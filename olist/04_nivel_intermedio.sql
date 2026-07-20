@@ -14,122 +14,123 @@ WHERE columna operador (
 
 -- ###################################################################
 -- 01. Mostrar los productos cuyo precio sea mayor que el precio promedio.
-SELECT * FROM order_items; -- price, product_id
+SELECT * FROM products;
+SELECT * FROM order_items;
 
-SELECT product_id,
-       price
+
+SELECT product_id, price 
 FROM order_items
-WHERE price >
-(
-    SELECT AVG(price)
+WHERE price > (
+    SELECT AVG(price) AS promedio_total
     FROM order_items
-);
+)
 
-
-
+;
 -- ###################################################################
 -- Mostrar los pedidos cuyo tiempo de entrega fue mayor al promedio.
+SELECT * FROM orders;
 
-SELECT order_id, (order_delivered_customer_date::date-order_purchase_timestamp::date) AS tiempo_entrega
- FROM orders
- WHERE (order_delivered_customer_date::date-order_purchase_timestamp::date) > (
-    SELECT AVG(order_delivered_customer_date::date-order_purchase_timestamp::date) AS tiempo_promedio
-    FROM orders
-); 
+SELECT order_id,(order_delivered_customer_date::date - order_purchase_timestamp::date) AS tiempo_entrega
+FROM orders
+WHERE (order_delivered_customer_date::date - order_purchase_timestamp::date) > (
+   SELECT AVG(order_delivered_customer_date::date - order_purchase_timestamp::date) AS tiempo_entrega_promedio
+   FROM orders
+);
 
 
 -- ###################################################################
 -- Mostrar los clientes que realizaron pedidos con un valor de pago mayor al pago promedio de todos los pedidos.
+SELECT * FROM customers; -- customer_id, customer_unique_id
+SELECT * FROM orders; -- order_id, customer_id,
+SELECT * FROM order_payments; -- order_id, payment_value
 
-SELECT * FROM order_payments;-- payment value, order_id
-SELECT * FROM orders; -- order_id, customer_id
+SELECT DISTINCT c.customer_unique_id, op.payment_value
 
-SELECT DISTINCT o.customer_id, op.payment_value
-FROM orders o
+FROM customers c
+JOIN orders o
+ON c.customer_id = o.customer_id
 JOIN order_payments op
 ON o.order_id = op.order_id
 WHERE op.payment_value > (
-    SELECT AVG(op.payment_value)
-    FROM order_payments op
-); 
-
+    SELECT AVG(payment_value) AS promedio
+    FROM order_payments
+)
 
 
 -- ###################################################################
 -- Mostrar los pedidos cuyo costo de envío (freight_value) sea mayor al costo de envío promedio de todos los pedidos.
-SELECT * FROM order_items; -- freight_value
+SELECT * FROM order_items;
 
-SELECT *
-FROM order_items
-WHERE freight_value > (
+SELECT DISTINCT order_id, freight_value
+ FROM order_items
+ WHERE freight_value > (
     SELECT AVG(freight_value)
     FROM order_items
-); 
-
-
-
+ )
+ ;
 -- ###################################################################
--- Mostrar los pagos que fueron superiores al pago máximo promedio esperado (promedio de todos los pagos).
-SELECT * FROM order_payments
-SELECT *
+-- Mostrar los pagos que fueron superiores al pago promedio esperado (promedio de todos los pagos).
+SELECT * FROM order_payments;
+
+SELECT payment_value 
 FROM order_payments
 WHERE payment_value > (
     SELECT AVG(payment_value)
-    FROM order_payments
-); 
+    FROM order_payments);
+
 -- ###################################################################
 -- Mostrar los productos cuyo peso sea mayor al peso promedio de todos los productos.
 SELECT * FROM products;
 
-SELECT *
+SELECT product_id, product_category_name ,product_weight_g 
 FROM products
 WHERE product_weight_g > (
-    SELECT AVG(product_weight_g)
+    SELECT AVG (product_weight_g)
     FROM products
-); 
-
-
+)
+;
 -- ###################################################################
 -- Mostrar los vendedores que realizaron ventas de productos cuyo precio sea mayor al precio promedio de todos los productos.
-SELECT * FROM sellers; 
+SELECT * FROM sellers; -- seller_id
 SELECT * FROM order_items; -- seller_id, price
 
 SELECT DISTINCT seller_id
 FROM order_items
 WHERE price > (
-    SELECT AVG(price)
+    SELECT AVG (price)
     FROM order_items
-); 
+)
+;
 
 -- ###################################################################
 -- Productos que nunca fueron vendidos (no aparecen en order_items).
-SELECT * FROM products;
-SELECT * FROM order_items;
+-- IN
+SELECT * FROM order_items; -- product_id
+SELECT * FROM products; -- product_id
 
-SELECT * FROM products
+SELECT DISTINCT product_id 
+FROM products
 WHERE product_id NOT IN (
-    SELECT  product_id
+    SELECT product_id 
     FROM order_items
-
 )
 ;
+
 -- ###################################################################
 --  Pedidos cuyo monto total pagado (sumando todos sus pagos) es mayor al monto pagado en el pedido 
 -- "9ef432eb6251297304e76186b10a928d" (o cualquier order_id que quieras usar de referencia).
-SELECT * FROM orders;
+SELECT * FROM order_payments;
 
-SELECT order_id 
+SELECT
+    order_id,
+    SUM(payment_value) AS total_pagado
 FROM order_payments
-WHERE SUM(payment_value) > (
-    SELECT payment_value
+GROUP BY order_id
+HAVING SUM(payment_value) > (
+    SELECT SUM(payment_value)
     FROM order_payments
-WHERE order_id = '9ef432eb6251297304e76186b10a928d'
-)
-;
-
-SELECT *
-    FROM order_payments
-WHERE order_id = 'b81ef226f3fe1789b1e8b2acac839d17';
+    WHERE order_id = '9ef432eb6251297304e76186b10a928d'
+);
 
 
 -- ---------------------------------------------------------------------------
@@ -147,72 +148,279 @@ HAVING funcion_agregacion() operador (
 '''
 -- 1. Vendedores cuya cantidad de ventas (items vendidos) es mayor a 10. SIN SUBCONSULTA
 SELECT * FROM order_items;
-SELECT seller_id, COUNT(*) AS cantidad_items
+SELECT seller_id, COUNT(DISTINCT order_id) AS cantidad_ventas
  FROM order_items
  GROUP BY seller_id
- HAVING COUNT(*) > 10;
+ HAVING COUNT(*) > 10
  ;
 
 -- ###################################################################
 -- Vendedores cuya cantidad de ventas es mayor al promedio de ventas por vendedor.
+SELECT * FROM order_items;
 
-SELECT seller_id, COUNT(*) AS cantidad_items
- FROM order_items
- GROUP BY seller_id
- HAVING COUNT(*) >( --- 10;
- SELECT AVG(cantidad)FROM (
- SELECT COUNT(*) AS cantidad
- FROM order_items 
- GROUP BY seller_id)
- )
- ;
-
+SELECT seller_id, COUNT(DISTINCT order_id) AS cantidad_ventas
+FROM order_items
+GROUP BY seller_id
+HAVING COUNT(DISTINCT order_id) > (
+    SELECT AVG(cantidad_ventas) FROM (
+        SELECT COUNT(DISTINCT order_id) AS cantidad_ventas
+        FROM order_items
+        GROUP BY seller_id
+    ) AS subconsulta
+)
+;
 
 
 -- ###################################################################
 -- Mostrar los clientes con más pedidos que el promedio.
-''' ESTRUCTURA:
-SELECT ...
-FROM ...
-GROUP BY ...
-HAVING funcion_agregacion() operador (
 
-    SELECT ...
+SELECT * FROM orders; -- order_id, customer_id
 
-);
-'''
-SELECT * FROM customers; -- customer_id
-SELECT * FROM orders;
-
-SELECT c.customer_unique_id, COUNT(c.customer_unique_id) AS cantidad_pedidos_clientes
+SELECT c.customer_unique_id, COUNT(o.order_id) AS cantidad_pedidos 
 FROM orders o
 JOIN customers c
 ON o.customer_id = c.customer_id
 GROUP BY c.customer_unique_id
-HAVING AVG(COUNT(c.customer_unique_id)) > (
-
-    SELECT ...
-
+HAVING COUNT(order_id) > (
+    SELECT AVG(cantidad_pedidos) 
+    FROM (
+        SELECT COUNT(order_id) AS cantidad_pedidos 
+        FROM orders
+        GROUP BY customer_id
+    ) AS subconsulta
+)
+;
+-- # El join en la subconsulta tambien es neesario
+SELECT
+    c.customer_unique_id,
+    COUNT(o.order_id) AS cantidad_pedidos
+FROM orders o
+JOIN customers c
+    ON o.customer_id = c.customer_id
+GROUP BY c.customer_unique_id
+HAVING COUNT(o.order_id) > (
+    SELECT AVG(cantidad_pedidos)
+    FROM (
+        SELECT
+            c2.customer_unique_id,
+            COUNT(o2.order_id) AS cantidad_pedidos
+        FROM orders o2
+        JOIN customers c2
+            ON o2.customer_id = c2.customer_id
+        GROUP BY c2.customer_unique_id
+    ) AS subconsulta
 );
 
 -- ###################################################################
 -- Mostrar las categorías cuyo promedio de precio sea mayor al promedio general.
+SELECT * FROM products; -- product_id, product_category_name
+SELECT * FROM order_items; -- product_id, price
+
+SELECT p.product_category_name, AVG (oi.price) AS precio_categoria
+FROM products p
+JOIN order_items oi
+ON p.product_id = oi.product_id
+GROUP BY p.product_category_name
+HAVING AVG (oi.price) > (
+    SELECT AVG (oi2.price) AS total_promedio 
+    FROM products p2
+    JOIN order_items oi2
+    ON p2.product_id = oi2.product_id
+
+);
+
 -- ###################################################################
 -- Mostrar los vendedores cuyo promedio de review sea mayor al promedio general.
+SELECT * FROM order_reviews; -- order_id, review_score
+SELECT * FROM order_items; -- order_id, seller_id
+
+SELECT seller_id, ROUND(AVG (review_score),2) promedio_reviews
+FROM order_reviews r
+JOIN order_items oi
+ON r.order_id = oi.order_id
+GROUP BY seller_id
+HAVING AVG (review_score) > (
+    SELECT AVG (review_score) promedio_reviews
+    FROM order_reviews r2
+    JOIN order_items oi2
+    ON r2.order_id = oi2.order_id
+);
+
+
 -- ###################################################################
 -- Mostrar los estados con más clientes que el promedio.
+SELECT * FROM customers;
+
+SELECT customer_state, COUNT (*) AS cantidad_clientes 
+FROM customers
+GROUP BY customer_state
+HAVING COUNT (*) > (
+    SELECT AVG (cantidad_clientes) FROM (
+        SELECT COUNT (*) AS cantidad_clientes
+        FROM customers
+        GROUP BY customer_state
+    ) AS subconsulta
+);
 -- ###################################################################
 -- Mostrar las ciudades cuyo gasto total sea mayor al promedio.
+SELECT * FROM customers; -- customer_id, customer_city
+SELECT * FROM order_payments; -- order_id, payment_value
+SELECT * FROM orders; -- order_id, customer_id
+
+SELECT c.customer_city,  SUM(op.payment_value) AS gasto_total
+FROM customers c
+
+JOIN orders o
+ON c.customer_id = o.customer_id
+
+JOIN order_payments op
+ON o.order_id = op.order_id
+GROUP BY c.customer_city 
+HAVING SUM(op.payment_value) > (
+    SELECT AVG(gasto_total) FROM (
+    SELECT SUM (op2.payment_value) AS gasto_total
+    FROM customers c2
+    JOIN orders o2
+    ON c2.customer_id = o2.customer_id
+    JOIN order_payments op2
+    ON o2.order_id = op2.order_id
+    GROUP BY c2.customer_city 
+) AS subconsulta
+)
+
 -- ###################################################################
--- Mostrar los vendedores cuyo ingreso total supere el ingreso promedio.
+-- Mostrar los vendedores cuyo ingreso total supere el ingreso promedio por vendedor.
+SELECT * FROM order_items; -- order_id, seller_id
+SELECT * FROM order_payments; -- order_id, payment_value
+
+SELECT oi.seller_id, SUM (op.payment_value) AS ingreso 
+FROM order_items oi
+
+JOIN order_payments op
+ON oi.order_id = op.order_id
+GROUP BY oi.seller_id
+HAVING  SUM (op.payment_value) > (
+    SELECT  AVG(ingreso) FROM (
+    SELECT SUM(op2.payment_value) AS ingreso
+    FROM order_items oi2
+    JOIN order_payments op2
+    ON oi2.order_id = op2.order_id
+    GROUP BY oi2.seller_id
+    ) AS subconsulta 
+);
+
+
 -- ###################################################################
 -- Mostrar las categorías cuyo peso promedio sea mayor al promedio general.
+SELECT * FROM products; 
+
+SELECT product_category_name, AVG(product_weight_g) AS peso_promedio 
+FROM products
+GROUP BY product_category_name
+HAVING AVG(product_weight_g)  > (
+    SELECT AVG(product_weight_g) 
+    FROM products
+
+)
+; 
+
 -- ###################################################################
 -- Mostrar los clientes cuya cantidad de categorías compradas sea mayor al promedio.
+SELECT * FROM products; -- product_id, product_category_name
+SELECT * FROM order_items; -- order_id product_id, order_items_id
+SELECT * FROM orders; -- customer_id, order_id
+SELECT * FROM customers; -- customer_id, customer_unique_id 
+
+SELECT c.customer_unique_id, COUNT(DISTINCT p.product_category_name) AS cantidad
+FROM customers c
+JOIN orders o
+ON c.customer_id = o.customer_id
+JOIN order_items oi
+ON o.order_id = oi.order_id
+JOIN products p
+ON oi.product_id = p.product_id
+GROUP BY c.customer_unique_id
+HAVING COUNT(DISTINCT p.product_category_name) > (
+    SELECT AVG (cantidad_categorias) FROM (
+        SELECT COUNT(DISTINCT p2.product_category_name) AS cantidad_categorias
+        FROM customers c2
+        JOIN orders o2
+        ON c2.customer_id = o2.customer_id
+        JOIN order_items oi2
+        ON o2.order_id = oi2.order_id
+
+        JOIN products p2
+        ON oi2.product_id = p2.product_id
+        GROUP BY c2.customer_unique_id
+    ) AS subconsulta
+)
+;
+
 -- ###################################################################
 -- Mostrar los meses cuya cantidad de pedidos sea mayor al promedio mensual.
+SELECT * FROM orders; -- order_id, order_purchase_timestamp
+--  esto agrupa los meses de todos los años
+SELECT  EXTRACT(MONTH FROM order_purchase_timestamp) AS mes, COUNT(*) AS cantidad_pedidos
+FROM orders
+GROUP BY EXTRACT(MONTH FROM order_purchase_timestamp) 
+HAVING COUNT(*) > (
+    SELECT AVG(cantidad) FROM (
+        SELECT COUNT(*) AS cantidad
+        FROM orders
+        GROUP BY EXTRACT(MONTH FROM order_purchase_timestamp) 
+    ) AS subconsulta
+    )
+;
+
+
+-- Si queremos mes-año
+SELECT
+    DATE_TRUNC('month', order_purchase_timestamp) AS mes,
+    COUNT(*) AS cantidad_pedidos
+FROM orders
+GROUP BY DATE_TRUNC('month', order_purchase_timestamp)
+HAVING COUNT(*) > (
+    SELECT AVG(cantidad)
+    FROM (
+        SELECT
+            COUNT(*) AS cantidad
+        FROM orders
+        GROUP BY DATE_TRUNC('month', order_purchase_timestamp)
+    ) AS subconsulta
+);
+
+
 -- ###################################################################
 -- Mostrar los clientes cuyo gasto total sea superior al gasto promedio de su estado.
+SELECT * FROM customers; -- customer_id, customer_state, customer_unique_id
+SELECT * FROM orders; -- customer_id, order_id
+SELECT * FROM order_payments; -- order_id, payment_value
+
+-- Es incorrecta!!
+SELECT c.customer_unique_id, c.customer_state AS estado, SUM(op.payment_value) AS gastos 
+FROM customers c
+
+JOIN orders o
+ON c.customer_id = o.customer_id
+
+JOIN order_payments op
+ON o.order_id = op.order_id
+GROUP BY c.customer_unique_id, c.customer_state
+
+HAVING  SUM(op.payment_value) > (
+    SELECT AVG (gastos) FROM (
+      SELECT  SUM(op2.payment_value) AS gastos
+      FROM customers c2
+      JOIN orders o2
+      ON c2.customer_id = o2.customer_id
+      JOIN order_payments op2
+      ON o2.order_id = op2.order_id
+      GROUP BY c2.customer_unique_id, c2.customer_state
+    )
+
+)
+
+;
 
 
 -- -------------------------------------------------------------------------------
