@@ -436,16 +436,105 @@ FROM (
 
 -- ###################################################################
 -- Calcular el promedio del total de los pedidos.
+
+SELECT * FROM order_payments;
+
+SELECT AVG(total_pedido) AS promedio_total_pedidos
+FROM (
+    SELECT
+        order_id,
+        SUM(payment_value) AS total_pedido
+    FROM order_payments
+    GROUP BY order_id
+) AS pedidos
+;
+
 -- ###################################################################
 -- Contar cuántos pedidos superan el promedio.
+
+SELECT * FROM order_payments;
+
+SELECT COUNT(*) 
+FROM ( SELECT
+    SUM(payment_value) AS total_pedido
+    FROM order_payments
+    GROUP BY order_id
+    HAVING SUM(payment_value) > (
+        SELECT AVG(total_pedido) FROM 
+        ( SELECT 
+        SUM(payment_value) AS total_pedido
+        FROM order_payments
+        GROUP BY order_id        
+        ) AS subconsulta
+
+    ) 
+) AS pedidos_superiores;
+
 -- ###################################################################
 -- Calcular el ticket promedio por cliente.
+SELECT * FROM order_payments; -- order_id, payment_value
+SELECT * FROM orders: -- order_id, customer_id,
+SELECT * FROM customers; -- customer_id, customer_unique_id
+
+SELECT c.customer_unique_id, AVG(total_pedido) AS ticket_promedio
+FROM customers c
+JOIN orders o
+    ON c.customer_id = o.customer_id
+JOIN (
+    SELECT
+        order_id,
+        SUM(payment_value) AS total_pedido
+    FROM order_payments
+    GROUP BY order_id
+) AS pagos
+    ON o.order_id = pagos.order_id
+GROUP BY c.customer_unique_id;
+
+
 -- ###################################################################
 -- Encontrar el cliente con mayor gasto.
+SELECT * FROM order_payments; -- order_id, payment_value
+SELECT * FROM orders: -- order_id, customer_id,
+SELECT * FROM customers; -- customer_id, customer_unique_id
+
+SELECT c.customer_unique_id, SUM(total_gastos) AS total
+FROM customers c
+JOIN orders o
+ON c.customer_id = o.customer_id
+JOIN (
+    SELECT
+        order_id,
+        SUM(payment_value) AS total_gastos
+    FROM order_payments
+    GROUP BY order_id
+) AS pagos
+    ON o.order_id = pagos.order_id
+GROUP BY c.customer_unique_id
+ORDER BY total DESC
+LIMIT 1
+; 
+
 -- ###################################################################
 -- Encontrar la categoría con mayor facturación.
+SELECT * FROM products; -- product_id, product_category_name
+SELECT * FROM order_items; -- product_id, order_id
+SELECT * FROM order_payments; -- order_id, payment_value
+
+
+SELECT
+    p.product_category_name,
+    SUM(oi.price) AS facturacion
+FROM products p
+JOIN order_items oi
+    ON p.product_id = oi.product_id
+GROUP BY p.product_category_name
+ORDER BY facturacion DESC
+LIMIT 1;
+
 -- ###################################################################
 -- Contar cuántos clientes realizaron más de cinco pedidos.
+SELECT * FROM customers; -- customer_id, 
+
 -- ###################################################################
 -- Mostrar el promedio de pedidos por estado.
 -- ###################################################################
