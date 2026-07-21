@@ -533,16 +533,105 @@ LIMIT 1;
 
 -- ###################################################################
 -- Contar cuántos clientes realizaron más de cinco pedidos.
-SELECT * FROM customers; -- customer_id, 
+SELECT * FROM customers; -- customer_id, customer_unique_id
+SELECT * FROM orders; -- customer_id, order_id
+
+
+SELECT COUNT(*) AS cantidad_clientes FROM (
+    SELECT c.customer_unique_id, COUNT(o.order_id) AS cantidad_pedidos
+    FROM customers c 
+    JOIN orders o
+    ON c.customer_id = o.customer_id
+    GROUP BY c.customer_unique_id
+) AS clientes 
+WHERE cantidad_pedidos > 5
+;
 
 -- ###################################################################
 -- Mostrar el promedio de pedidos por estado.
+SELECT * FROM customers; -- customer_id, customer_state
+SELECT * orders;  -- customer_id, order_id
+
+SELECT customer_state, AVG(cantidad_pedidos) AS promedio_pedidos 
+FROM (
+    SELECT
+    c.customer_state,
+    c.customer_unique_id,
+    COUNT(o.order_id) AS cantidad_pedidos
+    FROM customers c
+    JOIN orders o
+    ON c.customer_id = o.customer_id
+    GROUP BY c.customer_state, c.customer_unique_id) 
+    AS pedidos_cliente
+GROUP BY customer_state;  
+
 -- ###################################################################
 -- Mostrar el promedio mensual de ventas.
+SELECT * FROM orders; -- order_id, order_purchase_timestamp
+SELECT * FROM order_payments; -- order_id, payment_value
+-- Esta mal
+SELECT
+    mes,
+    AVG(ventas) AS promedio_ventas
+FROM (
+    SELECT
+    DATE_TRUNC('month', o.order_purchase_timestamp) AS mes,
+    SUM(op.payment_value) AS ventas
+    FROM orders o
+    JOIN order_payments op
+    ON o.order_id = op.order_id
+    GROUP BY DATE_TRUNC('month', o.order_purchase_timestamp)) 
+    AS ventas_mensuales
+GROUP BY  mes
+ORDER BY mes ASC
+;
+
+SELECT AVG(ventas) AS promedio_mensual_ventas
+FROM (
+    SELECT
+        DATE_TRUNC('month', o.order_purchase_timestamp) AS mes,
+        SUM(op.payment_value) AS ventas
+    FROM orders o
+    JOIN order_payments op
+        ON o.order_id = op.order_id
+    GROUP BY DATE_TRUNC('month', o.order_purchase_timestamp)
+) AS ventas_mensuales;
+
+
 -- ###################################################################
 -- Mostrar cuántos vendedores superan el ingreso promedio.
+SELECT * order_payments -- order_id, payment_value
+SELECT * order_items; -- order_id, seller_id
+SELECT COUNT(*) AS cantidad_vendedores FROM (
+SELECT oi.seller_id, SUM(op.payment_value) AS ingresos_vendedores
+FROM order_items oi
+JOIN order_payments op
+ON oi.order_id = op.order_id
+GROUP BY oi.seller_id
+HAVING SUM(op.payment_value) > (
+    SELECT AVG(cantidad)
+    FROM (SELECT oi2.seller_id,  SUM(op2.payment_value) AS cantidad
+        FROM order_items oi2
+        JOIN order_payments op2
+        ON oi2.order_id = op2.order_id
+        GROUP BY oi2.seller_id
+        ) AS ingresos_vendedores
+    )
+) AS vendedores_superiores;
+
+
 -- ###################################################################
 -- Mostrar el promedio de productos vendidos por pedido.
+SELECT * FROM order_items; -- order_id, product_id
+
+SELECT AVG(cantidad) AS promedio_productos_por_pedido
+FROM (
+    SELECT 
+        order_id,
+        COUNT(product_id) AS cantidad
+    FROM order_items
+    GROUP BY order_id
+) AS productos_por_pedido;
 
 -- -----------------------------------------------------------------------------
 -- Módulo 4 - EXISTS y NOT EXISTS (10 ejercicios)
@@ -568,21 +657,120 @@ WHERE ...
 
 -- ###################################################################
 -- Clientes que realizaron al menos un pedido.
+SELECT * FROM customers; -- customers_id
+SELECT * FROM orders; -- customers_id, order_id
+
+SELECT c.customer_id
+FROM customers c
+WHERE EXISTS (
+    SELECT c.customer_id -- 1
+    FROM orders o
+    WHERE o.customer_id = c.customer_id
+);
+
 -- ###################################################################
 -- Productos vendidos al menos una vez.
+SELECT * FROM products; -- products_id
+SELECT * FROM order_items; -- order_id,  products_id
+
+SELECT p.product_id 
+FROM products p
+WHERE EXISTS (
+    SELECT 1 -- oi.product_id 
+    FROM order_items oi
+    WHERE oi.product_id = p.product_id 
+)
+;
+
+
 -- ###################################################################
 -- Vendedores con al menos un pedido entregado.
+SELECT * FROM sellers; -- seller_id
+SELECT * FROM order_items; -- seller_id, order_id
+SELECT * FROM orders; -- order_id, order_status = 'delivered'
+
+SELECT s.seller_id
+FROM sellers s
+WHERE EXISTS (
+    SELECT 1
+    FROM order_items oi
+    JOIN orders o
+    ON oi.order_id = o.order_id
+    WHERE oi.seller_id = s.seller_id
+    AND 
+    o.order_status = 'delivered'
+)
+
 -- ###################################################################
 -- Clientes que realizaron pedidos cancelados.
+SELECT * FROM customers; -- customer_id, customer_unique_id
+SELECT * FROM orders; -- order_id, order_status = 'canceled', customer_id
+
+SELECT c.customer_unique_id
+FROM customers c
+WHERE EXISTS (
+    SELECT 1
+    FROM orders o
+    WHERE o.customer_id = c.customer_id
+    AND
+    order_status = 'canceled'
+);
+
+
 -- ###################################################################
 -- Productos que recibieron alguna review.
+SELECT * FROM products; -- product_id
+SELECT * FROM order_reviews; -- order_id, order_review_id
+SELECT * FROM order_items; -- order_id, id_products
 
+SELECT product_id 
+FROM 
+products p
+WHERE EXISTS(
+    SELECT 1
+    FROM order_reviews rv
+    JOIN order_items oi
+    ON rv.order_id = oi.order_id
+    WHERE oi.product_id = p.product_id
+);
 
 -- NOT EXISTS
 -- ###################################################################
 -- Productos nunca vendidos.
+SELECT * FROM products; -- product_id
+SELECT * FROM order_items; -- product_id
+
+SELECT  p.product_id 
+FROM products p
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM order_items oi
+
+    WHERE oi.product_id = p.product_id 
+);
+SELECT COUNT(*)
+FROM products p
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM order_items oi
+    WHERE oi.product_id = p.product_id
+);
+-- No hay
+
 -- ###################################################################
 -- Clientes sin pedidos.
+SELECT * FROM customers; -- customer_id, customer_unique_id
+SELECT * FROM orders; -- customer_id, order_id
+
+SELECT c.customer_unique_id 
+FROM customers c
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM orders o
+    WHERE o.customer_id = c.customer_id
+)
+;
+
 -- ###################################################################
 -- Productos sin reviews.
 -- ###################################################################
