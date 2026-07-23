@@ -773,15 +773,58 @@ WHERE NOT EXISTS (
 
 -- ###################################################################
 -- Productos sin reviews.
+SELECT * FROM order_reviews; -- order_id, review_id
+SELECT * FROM order_items; -- order_id, product_id
+SELECT * FROM products; -- product_id
+
+
+SELECT p.product_id 
+FROM products p
+WHERE NOT EXISTS(
+    SELECT 1
+    FROM order_reviews rv
+    JOIN order_items oi
+    ON rv.order_id = oi.order_id
+    WHERE oi.product_id = p.product_id
+);
+
+
 -- ###################################################################
 -- Vendedores sin pedidos entregados.
+SELECT * FROM sellers; -- seller_id
+SELECT * FROM orders; -- order_id, order_status = 'delivered' 
+SELECT DISTINCT order_status FROM orders;
+SELECT * FROM order_items; -- order_id, seller_id
+
+SELECT s.seller_id 
+FROM sellers s
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM orders o
+    JOIN order_items oi
+    ON o.order_id = oi.order_id
+    WHERE oi.seller_id = s.seller_id AND 
+    o.order_status = 'delivered' 
+); 
+
 
 -- ###################################################################
 -- Categorías que nunca tuvieron ventas.
+SELECT * FROM products; -- product_id, product_category_name
+SELECT * FROM order_items; -- product_id, 
 
+SELECT DISTINCT p.product_category_name
+FROM products p
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM products p2
+    JOIN order_items oi
+        ON oi.product_id = p2.product_id
+    WHERE p2.product_category_name = p.product_category_name
+);
 -- ----------------------------------------------------------------------------
 -- Módulo 5 - Subconsultas correlacionadas (10 ejercicios)
-
+-- Responde a la pregunta ¿Cómo se compara esta fila con otras filas relacionadas con ella?
 '''
 ESTRUCTURA
 SELECT ...
@@ -803,11 +846,76 @@ WHERE t2.columna = t1.columna
 
 -- ###################################################################
 -- Mostrar el pedido más caro de cada cliente.
+-- No es la mejor forma de hacerlo!!
+SELECT * FROM customers; -- customer_id
+SELECT * FROM order_payments; -- order_id, payment_value
+SELECT * FROM orders; -- order_id, customer_id
+
+
+SELECT o.order_id, o.customer_id, SUM(op.payment_value) AS pago_total
+FROM orders o
+JOIN order_payments op
+ON o.order_id = op.order_id
+GROUP BY o.order_id, o.customer_id
+HAVING SUM(op.payment_value) = (
+    SELECT MAX(pago_pedido) FROM (
+        SELECT o2.order_id, o2.customer_id, SUM(op2.payment_value) AS pago_pedido
+        FROM orders o2
+        JOIN order_payments op2
+        ON o2.order_id = op2.order_id
+        
+        WHERE o2.customer_id = o.customer_id
+        GROUP BY o2.order_id, o2.customer_id
+
+    ) AS pedido_cliente
+);
+
+
+
 
 -- ###################################################################
 -- Mostrar el producto más caro de cada categoría.
+SELECT * FROM products; -- product_id, product_category_name
+SELECT * FROM order_items; -- product_id, price
+
+SELECT p.product_id, p.product_category_name, oi.price
+FROM products p
+JOIN order_items oi
+ON p.product_id = oi.product_id
+WHERE oi.price = (
+    SELECT MAX(oi2.price)
+    FROM products p2
+    JOIN order_items oi2
+        ON p2.product_id = oi2.product_id
+    WHERE p2.product_category_name = p.product_category_name
+);
+
 -- ###################################################################
 -- Mostrar el cliente que más gastó dentro de cada estado.
+SELECT * FROM customers; -- customer_id, customer_unique_id, customer_state
+SELECT * FROM order_payments; -- order_id, payment_value
+SELECT * FROM orders; -- order_id, customer_id
+
+SELECT c.customer_id, c.customer_state, SUM(op.payment_value) AS gasto_total
+FROM customers c
+JOIN orders o
+    ON c.customer_id = o.customer_id
+JOIN order_payments op
+    ON o.order_id = op.order_id
+GROUP BY c.customer_id, c.customer_state
+HAVING SUM(op.payment_value) = (
+    SELECT MAX(gasto_cliente) FROM (
+        SELECT c2.customer_id, c2.customer_state, SUM(op2.payment_value) AS gasto_cliente
+        FROM customers c2
+        JOIN orders o2
+            ON c2.customer_id = o2.customer_id
+        JOIN order_payments op2
+            ON o2.order_id = op2.order_id
+        WHERE c2.customer_state = c.customer_state
+        GROUP BY c2.customer_id, c2.customer_state
+    ) AS gastos_estado
+);
+
 -- ###################################################################
 -- Mostrar el vendedor con más ventas por estado.
 -- ###################################################################
