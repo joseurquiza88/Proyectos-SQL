@@ -32,9 +32,45 @@
 
 -- ###################################################################
 -- 9. Usando una CTE, calcular el total gastado por cliente y mostrar los 10 clientes con mayor gasto.
+SELECT * FROM order_payments;
+SELECT * FROM orders;
+WITH gasto_clientes AS (
+    SELECT 
+        o.customer_id,
+        SUM(op.payment_value) AS gasto_total
+    FROM orders o
+    JOIN order_payments op
+        ON o.order_id = op.order_id
+    GROUP BY o.customer_id
+)
+
+SELECT 
+    customer_id,
+    gasto_total
+FROM gasto_clientes
+ORDER BY gasto_total DESC
+LIMIT 10;
+
 
 -- ###################################################################
 -- 10. Usando una CTE, calcular la cantidad de pedidos por mes y mostrar el mes con más pedidos.
+
+SELECT * FROM orders;
+
+WITH pedidos_por_mes AS (
+    SELECT 
+        DATE_TRUNC('month', order_purchase_timestamp) AS mes,
+        COUNT(order_id) AS cantidad_pedidos
+    FROM orders
+    GROUP BY DATE_TRUNC('month', order_purchase_timestamp)
+)
+
+SELECT 
+    mes,
+    cantidad_pedidos
+FROM pedidos_por_mes
+ORDER BY cantidad_pedidos DESC
+LIMIT 1;
 
 -- ###################################################################
 -- 11. Usando una CTE, calcular el promedio de entrega por vendedor.
