@@ -296,15 +296,27 @@ ORDER BY ventas DESC
 
 -- 4.1 Clientes que compraron en 2024 y clientes que compraron en 2025, en una sola lista.
 -- Mira cuántas filas salen abajo a la derecha: UNION ALL = 21,448 · UNION = 18,666 (2,782 clientes compraron los dos años).
-SELECT CustomerID FROM Sales.SalesOrderHeader WHERE YEAR(OrderDate) = 2024 GROUP BY CustomerID
+SELECT CustomerID 
+FROM Sales.SalesOrderHeader 
+WHERE YEAR(OrderDate) = 2024 
+GROUP BY CustomerID
+--
 UNION ALL
-SELECT CustomerID FROM Sales.SalesOrderHeader WHERE YEAR(OrderDate) = 2025 GROUP BY CustomerID
+--
+SELECT CustomerID 
+FROM Sales.SalesOrderHeader 
+WHERE YEAR(OrderDate) = 2025 
+GROUP BY CustomerID
 
+-----------------------------
 SELECT CustomerID FROM Sales.SalesOrderHeader WHERE YEAR(OrderDate) = 2024
 UNION
 SELECT CustomerID FROM Sales.SalesOrderHeader WHERE YEAR(OrderDate) = 2025
 
 -- 4.2 Armar un reporte por partes: una fila por canal y una fila de TOTAL al final.
+-- Arma una tabla digamos, mientra sean los valores
+
+-- Tipo de valores se instancia en la primera tabla
 SELECT 'Online' AS canal, COUNT(*) AS pedidos, SUM(TotalDue) AS ventas
 FROM Sales.SalesOrderHeader WHERE OnlineOrderFlag = 1
 UNION ALL
@@ -315,6 +327,8 @@ SELECT 'TOTAL', COUNT(*), SUM(TotalDue)
 FROM Sales.SalesOrderHeader
 
 -- 4.3 Una sola lista con categorías y subcategorías, con una columna que diga de dónde viene cada fila.
+-- Las primeras 4 filas son las categorias y depues estan las subcategorias
+
 SELECT 'Categoría' AS tipo, Name AS nombre FROM Production.ProductCategory
 UNION ALL
 SELECT 'Subcategoría', Name FROM Production.ProductSubcategory
