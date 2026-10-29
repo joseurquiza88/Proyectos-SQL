@@ -290,27 +290,27 @@ mediante visualizaciones e indicadores interactivos.
 
 ## Estructura del repositorio
 
-La estructura puede organizarse de la siguiente manera, ajustándola a
-los archivos incluidos en el repositorio:
 
 ``` text
 .
 ├── README.md
 ├── sql/
-│   ├── 01_staging_y_carga.sql
-│   ├── 02_perfilamiento_y_calidad.sql
-│   ├── 03_modelo_dimensional.sql
-│   ├── 04_carga_dimensiones_y_hechos.sql
-│   ├── 05_validaciones.sql
-│   └── 06_consultas_analiticas.sql
-└── images/
-    └── modelo_estrella.png
+   ├── 00_contexto.md
+   ├── 00_diccionario_variables_bank_fraud_es.md
+   ├── 00_proyecto-integrador-final-sql.md
+   ├── 01_Creacion_base_datos.sql
+   ├── 02_Transformacion_tabla_inicial.sql
+   ├── 03_Exploracion_datos.sql
+   ├── 03_Exploracion_datos.sql
+   03_Exploracion_datos
+   ├── 04_Creacion_del_modelo.sql
+   ├── 05_Creacion_del_consultas_negocio.sql
+   ├── 06_Conclusiones.md
+   └── 07_Justificacion_solución.md
+   
+
 ```
 
-Los nombres anteriores son una propuesta de organización: deben
-reemplazarse por los nombres reales de los archivos del proyecto. Si se
-agregan capturas o un diagrama, se pueden ubicar en `images/` y enlazar
-desde esta documentación.
 
 ## Cómo revisar el proyecto
 
@@ -326,10 +326,6 @@ desde esta documentación.
 5.  Revisar los resultados de las consultas y el diagrama del modelo
     estrella.
 
-> Los pasos exactos de ejecución dependen de los nombres de las bases de
-> datos, esquemas, archivos y rutas utilizados en la implementación. La
-> estructura y los scripts del repositorio deben reflejar el proyecto
-> real.
 
 ## Alcance y limitaciones
 
