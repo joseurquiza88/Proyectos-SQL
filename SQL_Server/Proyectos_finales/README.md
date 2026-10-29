@@ -301,8 +301,7 @@ mediante visualizaciones e indicadores interactivos.
    ├── 01_Creacion_base_datos.sql
    ├── 02_Transformacion_tabla_inicial.sql
    ├── 03_Exploracion_datos.sql
-   ├── 03_Exploracion_datos.sql
-   03_Exploracion_datos
+   ├── 03_Exploracion_datos.md
    ├── 04_Creacion_del_modelo.sql
    ├── 05_Creacion_del_consultas_negocio.sql
    ├── 06_Conclusiones.md
