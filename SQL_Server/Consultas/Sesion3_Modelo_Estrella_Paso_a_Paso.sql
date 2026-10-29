@@ -206,11 +206,12 @@ GO
 
 --Resolvemos
 
--- P1.1 Filas del detalle (20) y filas sin el duplicado (19)
+-- P1.1 Filas del detalle (20) y filas sin el duplicado (19), hay algo que se esta duplicando
 SELECT COUNT(*) AS filas FROM ops.DetalleVenta
 SELECT COUNT(*) AS filas_sin_duplicado
 FROM (SELECT DISTINCT * FROM ops.DetalleVenta) AS x
 
+-- vemos que donde se esta duplicando que es la venta 7
 SELECT VentaID, Linea, ProductoID, Cantidad, PrecioUnitario, Descuento,
        COUNT(*) AS veces
 FROM ops.DetalleVenta
@@ -219,6 +220,7 @@ HAVING COUNT(*) > 1
 
 SELECT*FROM ops.DetalleVenta
 -- P1.2 Formas distintas de escribir cada distrito
+-- No puede quedar asi hay que cambiarlo, proceso de limpieza
 SELECT DISTINCT Distrito FROM ops.Clientes
 
 SELECT DISTINCT

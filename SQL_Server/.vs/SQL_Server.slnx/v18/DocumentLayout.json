@@ -3,12 +3,24 @@
   "WorkspaceRootPath": "D:\\Josefina\\Proyectos\\Datascience\\SQL\\SQL_Server\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Josefina\\Proyectos\\Datascience\\SQL\\SQL_Server\\Consultas\\Clase_03_Practicas_clase.sql||{B5A506EB-11BE-4782-9A18-21265C2CA0B4}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Consultas\\Clase_03_Practicas_clase.sql||{B5A506EB-11BE-4782-9A18-21265C2CA0B4}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Josefina\\Proyectos\\Datascience\\SQL\\SQL_Server\\Consultas\\Sesion 3.sql||{B5A506EB-11BE-4782-9A18-21265C2CA0B4}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Consultas\\Sesion 3.sql||{B5A506EB-11BE-4782-9A18-21265C2CA0B4}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Josefina\\Proyectos\\Datascience\\SQL\\SQL_Server\\Consultas\\Clase_02_Practicas_clase.sql||{B5A506EB-11BE-4782-9A18-21265C2CA0B4}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Consultas\\Clase_02_Practicas_clase.sql||{B5A506EB-11BE-4782-9A18-21265C2CA0B4}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Josefina\\Proyectos\\Datascience\\SQL\\SQL_Server\\Proyectos_finales\\consultas\\04_Creacion_del_modelo.sql||{B5A506EB-11BE-4782-9A18-21265C2CA0B4}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Proyectos_finales\\consultas\\04_Creacion_del_modelo.sql||{B5A506EB-11BE-4782-9A18-21265C2CA0B4}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Josefina\\Proyectos\\Datascience\\SQL\\SQL_Server\\Proyectos_finales\\consultas\\03_Exploracion_datos.sql||{B5A506EB-11BE-4782-9A18-21265C2CA0B4}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Proyectos_finales\\consultas\\03_Exploracion_datos.sql||{B5A506EB-11BE-4782-9A18-21265C2CA0B4}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Josefina\\Proyectos\\Datascience\\SQL\\SQL_Server\\Proyectos_finales\\consultas\\02_Transformacion_tabla_inicial.sql||{B5A506EB-11BE-4782-9A18-21265C2CA0B4}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Proyectos_finales\\consultas\\02_Transformacion_tabla_inicial.sql||{B5A506EB-11BE-4782-9A18-21265C2CA0B4}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Josefina\\Proyectos\\Datascience\\SQL\\SQL_Server\\Proyectos_finales\\consultas\\01_Creacion_base_datos.sql||{B5A506EB-11BE-4782-9A18-21265C2CA0B4}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Proyectos_finales\\consultas\\01_Creacion_base_datos.sql||{B5A506EB-11BE-4782-9A18-21265C2CA0B4}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,31 +30,68 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Clase_03_Practicas_clase.sql - DESKTOP-TEHG2QD.AdventureWorks2025 (DESKTOP-TEHG2QD\\Josefina Urquiza (84))",
-              "DocumentMoniker": "D:\\Josefina\\Proyectos\\Datascience\\SQL\\SQL_Server\\Consultas\\Clase_03_Practicas_clase.sql",
-              "RelativeDocumentMoniker": "Consultas\\Clase_03_Practicas_clase.sql",
-              "ToolTip": "D:\\Josefina\\Proyectos\\Datascience\\SQL\\SQL_Server\\Consultas\\Clase_03_Practicas_clase.sql - DESKTOP-TEHG2QD.AdventureWorks2025 (DESKTOP-TEHG2QD\\Josefina Urquiza (84))*",
-              "RelativeToolTip": "Consultas\\Clase_03_Practicas_clase.sql - DESKTOP-TEHG2QD.AdventureWorks2025 (DESKTOP-TEHG2QD\\Josefina Urquiza (84))*",
+              "DocumentIndex": 4,
+              "Title": "01_Creacion_base_datos.sql - DESKTOP-TEHG2QD.BankFraud (DESKTOP-TEHG2QD\\Josefina Urquiza (78))",
+              "DocumentMoniker": "D:\\Josefina\\Proyectos\\Datascience\\SQL\\SQL_Server\\Proyectos_finales\\consultas\\01_Creacion_base_datos.sql",
+              "RelativeDocumentMoniker": "Proyectos_finales\\consultas\\01_Creacion_base_datos.sql",
+              "ToolTip": "D:\\Josefina\\Proyectos\\Datascience\\SQL\\SQL_Server\\Proyectos_finales\\consultas\\01_Creacion_base_datos.sql - DESKTOP-TEHG2QD.BankFraud (DESKTOP-TEHG2QD\\Josefina Urquiza (78))",
+              "RelativeToolTip": "Proyectos_finales\\consultas\\01_Creacion_base_datos.sql - DESKTOP-TEHG2QD.BankFraud (DESKTOP-TEHG2QD\\Josefina Urquiza (78))",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2026-10-24T01:29:50.835Z",
-              "EditorCaption": " - DESKTOP-TEHG2QD.AdventureWorks2025 (DESKTOP-TEHG2QD\\Josefina Urquiza (84))"
+              "WhenOpened": "2026-10-27T17:55:40.521Z",
+              "IsPinned": true,
+              "EditorCaption": " - DESKTOP-TEHG2QD.BankFraud (DESKTOP-TEHG2QD\\Josefina Urquiza (78))"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "02_Transformacion_tabla_inicial.sql - DESKTOP-TEHG2QD.BankFraud (DESKTOP-TEHG2QD\\Josefina Urquiza (58))",
+              "DocumentMoniker": "D:\\Josefina\\Proyectos\\Datascience\\SQL\\SQL_Server\\Proyectos_finales\\consultas\\02_Transformacion_tabla_inicial.sql",
+              "RelativeDocumentMoniker": "Proyectos_finales\\consultas\\02_Transformacion_tabla_inicial.sql",
+              "ToolTip": "D:\\Josefina\\Proyectos\\Datascience\\SQL\\SQL_Server\\Proyectos_finales\\consultas\\02_Transformacion_tabla_inicial.sql - DESKTOP-TEHG2QD.BankFraud (DESKTOP-TEHG2QD\\Josefina Urquiza (58))",
+              "RelativeToolTip": "Proyectos_finales\\consultas\\02_Transformacion_tabla_inicial.sql - DESKTOP-TEHG2QD.BankFraud (DESKTOP-TEHG2QD\\Josefina Urquiza (58))",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2026-10-27T19:16:24.515Z",
+              "EditorCaption": " - DESKTOP-TEHG2QD.BankFraud (DESKTOP-TEHG2QD\\Josefina Urquiza (58))"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "03_Exploracion_datos.sql - DESKTOP-TEHG2QD.BankFraud (DESKTOP-TEHG2QD\\Josefina Urquiza (60))",
+              "DocumentMoniker": "D:\\Josefina\\Proyectos\\Datascience\\SQL\\SQL_Server\\Proyectos_finales\\consultas\\03_Exploracion_datos.sql",
+              "RelativeDocumentMoniker": "Proyectos_finales\\consultas\\03_Exploracion_datos.sql",
+              "ToolTip": "D:\\Josefina\\Proyectos\\Datascience\\SQL\\SQL_Server\\Proyectos_finales\\consultas\\03_Exploracion_datos.sql - DESKTOP-TEHG2QD.BankFraud (DESKTOP-TEHG2QD\\Josefina Urquiza (60))",
+              "RelativeToolTip": "Proyectos_finales\\consultas\\03_Exploracion_datos.sql - DESKTOP-TEHG2QD.BankFraud (DESKTOP-TEHG2QD\\Josefina Urquiza (60))",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2026-10-27T19:16:24.94Z",
+              "EditorCaption": " - DESKTOP-TEHG2QD.BankFraud (DESKTOP-TEHG2QD\\Josefina Urquiza (60))"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Clase_02_Practicas_clase.sql - DESKTOP-TEHG2QD.AdventureWorks2025 (DESKTOP-TEHG2QD\\Josefina Urquiza (65))",
-              "DocumentMoniker": "D:\\Josefina\\Proyectos\\Datascience\\SQL\\SQL_Server\\Consultas\\Clase_02_Practicas_clase.sql",
-              "RelativeDocumentMoniker": "Consultas\\Clase_02_Practicas_clase.sql",
-              "ToolTip": "D:\\Josefina\\Proyectos\\Datascience\\SQL\\SQL_Server\\Consultas\\Clase_02_Practicas_clase.sql - DESKTOP-TEHG2QD.AdventureWorks2025 (DESKTOP-TEHG2QD\\Josefina Urquiza (65))",
-              "RelativeToolTip": "Consultas\\Clase_02_Practicas_clase.sql - DESKTOP-TEHG2QD.AdventureWorks2025 (DESKTOP-TEHG2QD\\Josefina Urquiza (65))",
+              "Title": "04_Creacion_del_modelo.sql - DESKTOP-TEHG2QD.BankFraud (DESKTOP-TEHG2QD\\Josefina Urquiza (86))",
+              "DocumentMoniker": "D:\\Josefina\\Proyectos\\Datascience\\SQL\\SQL_Server\\Proyectos_finales\\consultas\\04_Creacion_del_modelo.sql",
+              "RelativeDocumentMoniker": "Proyectos_finales\\consultas\\04_Creacion_del_modelo.sql",
+              "ToolTip": "D:\\Josefina\\Proyectos\\Datascience\\SQL\\SQL_Server\\Proyectos_finales\\consultas\\04_Creacion_del_modelo.sql - DESKTOP-TEHG2QD.BankFraud (DESKTOP-TEHG2QD\\Josefina Urquiza (86))",
+              "RelativeToolTip": "Proyectos_finales\\consultas\\04_Creacion_del_modelo.sql - DESKTOP-TEHG2QD.BankFraud (DESKTOP-TEHG2QD\\Josefina Urquiza (86))",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2026-10-24T01:29:01.378Z",
-              "EditorCaption": " - DESKTOP-TEHG2QD.AdventureWorks2025 (DESKTOP-TEHG2QD\\Josefina Urquiza (65))"
+              "WhenOpened": "2026-10-27T18:14:03.88Z",
+              "EditorCaption": " - DESKTOP-TEHG2QD.BankFraud (DESKTOP-TEHG2QD\\Josefina Urquiza (86))"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Sesion 3.sql - no conectado",
+              "DocumentMoniker": "D:\\Josefina\\Proyectos\\Datascience\\SQL\\SQL_Server\\Consultas\\Sesion 3.sql",
+              "RelativeDocumentMoniker": "Consultas\\Sesion 3.sql",
+              "ToolTip": "D:\\Josefina\\Proyectos\\Datascience\\SQL\\SQL_Server\\Consultas\\Sesion 3.sql - no conectado",
+              "RelativeToolTip": "Consultas\\Sesion 3.sql - no conectado",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2026-10-27T11:22:59.9Z",
+              "EditorCaption": " - no conectado"
             }
           ]
         }
